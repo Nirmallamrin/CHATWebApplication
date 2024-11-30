@@ -1,23 +1,31 @@
 import express from 'express';
-import dotenv from 'dotenv';
-import connect from './config/db.js';
-import cookieParser from 'cookie-parser';
-import userRouter from './routes/userRoute.js';
-import messageRouter from './routes/messageRouter.js';
+import dotenv from "dotenv";
+import connect from "./config/db.js";
+import { chats } from './data/data.js';
+import cors from "cors";
 
 dotenv.config();
 
 connect()
-
 const app = express();
+const port = process.env.PORT || 5000
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  })
+);
 
-const port = 5000
+app.use(express.json())
 
-app.use(express.json());
-app.use(cookieParser());
+app.get("/api/chat", (req, res) => {
+    res.send(chats)
+})
 
-app.use("/user", userRouter)
-app.use("/messages", messageRouter);
+app.get("/api/chat/:id", (req, res) => {
+    //   console.log(req.params.id);
+    const singleChat = chats.find((c) => c._id === req.params.id);
+    res.send(singleChat);
+});
 
 app.get('/', (req, res) => {
     res.send('Hello Chat!');
