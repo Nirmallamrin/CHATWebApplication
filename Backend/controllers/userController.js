@@ -4,12 +4,12 @@ import { generateToken } from "../utils/generateToken.js";
 
 export const signup = async (req, res) => {
     try {
-        const {userName, email, password} = req.body
+        const {userName, email, password, pic} = req.body
 
         const userExist = await User.findOne({email});
 
-        if(!userExist) {
-            return res.send("User is already exist");
+        if(userExist) {
+            return res.status(400).send("User is already exists");
         }
 
         const saltRounds = 10;
@@ -19,6 +19,7 @@ export const signup = async (req, res) => {
             userName,
             email,
             hashPassword,
+            pic,
         })
 
         const newUserCreated = await newUser.save();
@@ -37,7 +38,7 @@ export const signup = async (req, res) => {
     }
 }
 
-export const signin = async (req, res) => {
+export const login = async (req, res) => {
     try {
         const {email, password} = req.body;
 
@@ -55,8 +56,9 @@ export const signin = async (req, res) => {
 
         const token = generateToken(email);
         res.cookie("token", token);
-        res.send("Logged in!");
+        res.status(200).send("Logged in!");
     } catch (error) {
+        console.log(error, "Something wrong");
         res.status(500).send("Internal Server Error");
     }
 }

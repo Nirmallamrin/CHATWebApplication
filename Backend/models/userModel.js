@@ -1,20 +1,15 @@
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-  username: String,
+  userName: String,
   email: String,
-  password: String,
+  hashPassword: String,
   pic: {
-    type: "String",
-    required: true,
+    type: "String",   
     default:
       "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
   },
-  isAdmin: {
-    type: Boolean,
-    required: true,
-    default: false,
-    },
+
   },
   {
     timestamps: true,

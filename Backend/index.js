@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import connect from "./config/db.js";
 import { chats } from './data/data.js';
 import cors from "cors";
+import userRouter from './routes/userRoute.js';
 
 dotenv.config();
 
@@ -15,17 +16,9 @@ app.use(
   })
 );
 
-app.use(express.json())
+app.use(express.json()) // to accept json data
 
-app.get("/api/chat", (req, res) => {
-    res.send(chats)
-})
-
-app.get("/api/chat/:id", (req, res) => {
-    //   console.log(req.params.id);
-    const singleChat = chats.find((c) => c._id === req.params.id);
-    res.send(singleChat);
-});
+app.use("/user", userRouter)
 
 app.get('/', (req, res) => {
     res.send('Hello Chat!');
