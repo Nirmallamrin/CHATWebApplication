@@ -2,8 +2,20 @@ import React from 'react'
 import { Container, Link, Tabs } from "@chakra-ui/react";
 import Login from '../components/Authentication/Login';
 import Signup from "../components/Authentication/Signup";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from 'react';
 
 const HomePage = () => {
+     const navigate = useNavigate();
+
+     useEffect(() => {
+       const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+       
+       if (!userInfo) navigate("/");
+       
+     }, []);
+  
+
   return (
     <Container>
       <div>

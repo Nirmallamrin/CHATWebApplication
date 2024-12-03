@@ -5,6 +5,7 @@ import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
 import { Button } from "@chakra-ui/button";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { LoginSocialGoogle } from "reactjs-social-login";
 
 const Login = () => {
     const [show, setshow] = useState(false);
@@ -86,6 +87,25 @@ const submitHandler = async () => {
         }}
       >
         Get User Credentials
+      </Button>
+      <Button>
+        <LoginSocialGoogle
+          client_id="562640248559-hbvoqgqahu7bfb0dc1mea3gnprggehbv.apps.googleusercontent.com"
+          access_type="offline"
+          onResolve={({ provider, data }) => {
+            console.log("Google Login Success:", data);
+            // Handle user data here (e.g., send token to backend or store it)
+            localStorage.setItem("userInfo", JSON.stringify(data));
+            navigate("/chats"); // Redirect after successful login
+          }}
+          onReject={(err) => {
+            console.error("Google Login Error:", err);
+            alert("Google Login Failed");
+          }}
+        >
+          Log in with Google
+        </LoginSocialGoogle>
+        Log in with Google
       </Button>
     </VStack>
   );
