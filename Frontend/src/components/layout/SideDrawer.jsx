@@ -75,14 +75,17 @@ const SideDrawer = () => {
       setLoading(true);
 
       const { data } = await axios.post(
-        "http://localhost:5000/chat/access", { userId });
+        "http://localhost:5000/chat", { userId });
       
-      if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
+      if (!chats.find((c) => c._id === data._id)) {
+      setChats([data, ...chats]);
+      }     
       setSelectedChat(data);
       setLoading(false);
+      handleCloseDrawer();
       console.log(data)
     } catch (error) {
-      alert("Error in Fetching the chat")
+      alert(error,"Error in Fetching the chat")
     }
 
   }
@@ -182,24 +185,11 @@ const SideDrawer = () => {
                   </div>
                 ) : searchResult.length > 0 ? (
                   searchResult.map((user) => (
-                    <div
+                    <UserListItem
                       key={user._id}
-                      onClick={() => {
-                        accessChat(user._id);
-                        handleCloseDrawer(); // Close the drawer after selecting a chat
-                      }}
-                      className="flex items-center p-3 border rounded shadow-md hover:bg-gray-100 cursor-pointer"
-                    >
-                      <img
-                        src={user.pic || "https://via.placeholder.com/40"}
-                        alt={user.name}
-                        className="w-10 h-10 rounded-full mr-3"
-                      />
-                      <div>
-                        <p className="text-sm font-medium">{user.name}</p>
-                        <p className="text-xs text-gray-500">{user.email}</p>
-                      </div>
-                    </div>
+                      user={user}
+                      handleFunction={() => accessChat(user._id)}
+                    />
                   ))
                 ) : (
                   <p className="text-sm text-gray-500">No users found</p>

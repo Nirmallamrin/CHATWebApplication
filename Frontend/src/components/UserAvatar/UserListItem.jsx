@@ -1,19 +1,25 @@
 import React from 'react'
 import { ChatState } from '../../Context/ChatProvider'
 
-const UserListItem = ({ handleFunction }) => {
+const UserListItem = ({user, handleFunction }) => {
     
-    const { user } = ChatState();
+   
   return (
-    <div onClick={handleFunction} className="flex cursor-pointer items-center">
-        <div>
-              <p>{user.name}</p> 
-              <img src={user.pic} />
-          </div>
-          <div>
-              <p>{user.name}</p>
-              <p>Email: {user.email }</p>
-          </div>
+    <div
+      onClick={handleFunction}
+      className="flex cursor-pointer items-center p-2 hover:bg-gray-100 rounded-md"
+    >
+      
+        <img
+          src={user.pic}
+          alt={user.userName}
+          className="w-12 h-12 rounded-full mr-4"
+        />
+      
+      <div>
+        <p className="font-bold">{user.userName}</p>
+        <p className="text-sm text-gray-500">{user.email}</p>
+      </div>
     </div>
   );
 }

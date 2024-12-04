@@ -9,8 +9,8 @@ import {
 } from "../controllers/chatController.js";
 import { auth } from "../middlewares/auth.js";
 
-chatRouter.post("/access", accessChat);
-chatRouter.get("/fetch", fetchChats);
+chatRouter.post("/", accessChat);
+chatRouter.get("/", fetchChats);
 chatRouter.post("/group", createGroupChat);
 chatRouter.put("/rename", renameGroup);
 chatRouter.put("/remove", removeFromGroup);

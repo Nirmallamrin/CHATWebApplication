@@ -11,10 +11,10 @@ const ChatPage = () => {
   
   return (
     <div className="w-full">
-      {user && <SideDrawer/>}
-      <div className='flex justify-between w-full h-96 p-10'>
-        {user && <MyChats/>}
-        {user && <ChatBox/>}
+      <div>{user && <SideDrawer />}</div>
+      <div className="flex justify-between w-full h-96 p-10">
+        {user && <MyChats />}
+        {user && <ChatBox />}
       </div>
     </div>
   );
